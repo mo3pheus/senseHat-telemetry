@@ -1,0 +1,18 @@
+senseHat.telemetry.service
+
+--target.ip.address micro-vault
+--collection.interval.seconds 60
+--zookeeper.ip antares-mainframe
+--kafka.topic senseHat1
+--sensehat.data.url http://micro-vault:5000/sensehat/
+--sensehat.data.fields temperature, humidity, accelerometer, gyroscope, pressure
+
+
+Major components
+
+DataExtractor - class
+- takes in the targetIp and dataUrl - returns current datapacket protobuf
+
+ScheduledExtract - independent thread, runs on schedule - extracts data from DataExtractor, sends it on kafka topic
+
+// --target.ip.address micro-vault --collection.interval.seconds 60 --sensehat.data.url http://micro-vault:5000/sensehat/ --sensehat.data.fields temperature,humidity,accelerometer,gyroscope,pressure --mwtt.transmission.topic something --mqttt.transmission.endPoint http://localhost:1883 --log.level INFO --log.directory /home/sanket/Documents/workspace/senseHat-telemetry/src/main/resource/

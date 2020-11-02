@@ -1,0 +1,12 @@
+[Unit]
+Description=SenseHat Telemetry Service -v 1.0 for RaspberryPi SenseHat.
+
+[Service]
+Type=simple
+Restart=always
+RestartSec=3
+
+ExecStart=/bin/bash /opt/senseHatTelemetry/runSenseHatTelemetry.sh
+
+[Install]
+WantedBy=multi-user.target
