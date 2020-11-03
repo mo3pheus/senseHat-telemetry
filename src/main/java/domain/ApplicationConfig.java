@@ -68,7 +68,7 @@ public class ApplicationConfig implements Serializable {
                 .setDefault("INFO")
                 .help("Severity level for log collection");
         argumentParser.addArgument("--log.directory")
-                .setDefault("/var/log/senseHat/telemetry")
+                .setDefault("/var/log/senseHatTelemetry/")
                 .help("Directory where application logs will be stored.");
 
 

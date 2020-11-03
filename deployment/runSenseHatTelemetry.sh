@@ -8,6 +8,7 @@ echo ${MQTT_TRANSMISSION_ENDPOINT}
 echo "Executing scheduled data poll service"
 java -jar /opt/senseHatTelemetry/senseHat-telemetry-1.0-shaded.jar \
   --collection.interval.seconds "${COLLECTION_INTERVAL_SECONDS}" \
+  --sensehat.data.url "${SENSEHAT_DATA_URL}" \
   --sensehat.data.fields "${SENSEHAT_DATA_FIELDS}" \
   --mqtt.transmission.topic "${MQTT_TRANSMISSION_TOPIC}" \
   --mqtt.transmission.endpoint "${MQTT_TRANSMISSION_ENDPOINT}" \

@@ -1,10 +1,12 @@
 package data.daemon;
 
+import com.fasterxml.jackson.databind.ObjectMapper;
 import domain.ApplicationConfig;
 import domain.Response;
 import http.DataExtractor;
 import org.apache.commons.lang.SerializationUtils;
 import org.eclipse.paho.client.mqttv3.*;
+import org.json.simple.JSONObject;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -37,7 +39,11 @@ public class ScheduledExtractor implements Runnable {
             Response    response    = dataExtractor.getSenseHatResponse();
             MqttMessage mqttMessage = new MqttMessage();
             mqttMessage.setQos(1);
-            mqttMessage.setPayload(SerializationUtils.serialize(response));
+
+            ObjectMapper objectMapper = new ObjectMapper();
+            String       payload      = objectMapper.writeValueAsString(response);
+
+            mqttMessage.setPayload(payload.getBytes());
             telemetryBeacon.publish(applicationConfig.getMqttTransmissionTopic(), mqttMessage);
 
             logger.info("Sense hat telemetry running normally. Data sent to " + applicationConfig.getMqttTransmissionTopic());
