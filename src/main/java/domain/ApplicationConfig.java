@@ -12,25 +12,32 @@ import java.io.Serializable;
 public class ApplicationConfig implements Serializable {
     @Getter
     @Setter
-    private Integer   collectionIntervalSeconds;
+    private Integer collectionIntervalSeconds;
     @Getter
     @Setter
-    private String    senseDataUrl;
+    private String  senseDataUrl;
     @Getter
     @Setter
-    private String    senseDataFields;
+    private String  senseDataFields;
     @Getter
     @Setter
-    private String    mqttTransmissionTopic;
+    private String  mqttTransmissionTopic;
     @Getter
     @Setter
-    private String    mqttTransmissionEndpoint;
+    private String  mqttTransmissionEndpoint;
     @Getter
     @Setter
-    private String    logLevel;
+    private String  logLevel;
     @Getter
     @Setter
-    private String    logDirectory;
+    private String  logDirectory;
+    @Getter
+    @Setter
+    private String  mqttUsername;
+    @Getter
+    @Setter
+    private String  mqttPassword;
+
     private Namespace namespace;
 
     public ApplicationConfig(String[] args) throws ArgumentParserException {
@@ -40,6 +47,8 @@ public class ApplicationConfig implements Serializable {
         this.senseDataUrl              = namespace.getString("sensehat.data.url");
         this.mqttTransmissionEndpoint  = namespace.getString("mqtt.transmission.endpoint");
         this.mqttTransmissionTopic     = namespace.getString("mqtt.transmission.topic");
+        this.mqttUsername              = namespace.getString("mqtt.username");
+        this.mqttPassword              = namespace.getString("mqtt.password");
         this.logLevel                  = namespace.getString("log.level");
         this.logDirectory              = namespace.getString("log.directory");
     }
@@ -70,7 +79,12 @@ public class ApplicationConfig implements Serializable {
         argumentParser.addArgument("--log.directory")
                 .setDefault("/var/log/senseHatTelemetry/")
                 .help("Directory where application logs will be stored.");
-
+        argumentParser.addArgument("--mqtt.username")
+                .setDefault("username")
+                .help("mqtt username to write to specified broker");
+        argumentParser.addArgument("--mqtt.password")
+                .setDefault("password")
+                .help("mqtt password to write to specified broker");
 
         Namespace namespace = argumentParser.parseArgs(args);
         return namespace;

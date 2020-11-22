@@ -4,9 +4,7 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import domain.ApplicationConfig;
 import domain.Response;
 import http.DataExtractor;
-import org.apache.commons.lang.SerializationUtils;
 import org.eclipse.paho.client.mqttv3.*;
-import org.json.simple.JSONObject;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -26,6 +24,8 @@ public class ScheduledExtractor implements Runnable {
         options.setCleanSession(false);
         options.setMaxInflight(3);
         options.setKeepAliveInterval(300);
+        options.setUserName(applicationConfig.getMqttUsername());
+        options.setPassword(applicationConfig.getMqttPassword().toCharArray());
         telemetryBeacon.connect(options);
 
         logger.info("ScheduledExtractor configured correctly");
